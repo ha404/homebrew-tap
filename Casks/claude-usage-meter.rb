@@ -33,7 +33,7 @@ cask "claude-usage-meter" do
     Claude Usage Meter is not notarized. This cask removes the quarantine attribute
     so macOS will open it without a Gatekeeper prompt.
 
-    To show usage in Claude Code as well, click the menu bar bars and choose
-    "Set up Claude Code status line".
+    To show usage in Claude Code as well, click the menu bar bars and tick
+    "Claude Code status line".
   EOS
 end
