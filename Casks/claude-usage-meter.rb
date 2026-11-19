@@ -14,6 +14,14 @@ cask "claude-usage-meter" do
 
   app "ClaudeUsageMeter.app"
 
+  # The app is ad-hoc signed, not notarized, so Gatekeeper would refuse to launch the
+  # quarantined copy Homebrew installs. Clearing the attribute lets it open normally.
+  postflight_steps do
+    run "/usr/bin/xattr",
+        args:         ["-dr", "com.apple.quarantine", "{{appdir}}/ClaudeUsageMeter.app"],
+        must_succeed: false
+  end
+
   uninstall quit: "com.local.claude-usage-meter"
 
   zap trash: [
@@ -22,9 +30,8 @@ cask "claude-usage-meter" do
   ]
 
   caveats <<~EOS
-    Claude Usage Meter is not notarized, so macOS blocks its first launch.
-    Open it once, then allow it in:
-      System Settings → Privacy & Security → Open Anyway
+    Claude Usage Meter is not notarized. This cask removes the quarantine attribute
+    so macOS will open it without a Gatekeeper prompt.
 
     To show usage in Claude Code as well, click the menu bar bars and choose
     "Set up Claude Code status line".
